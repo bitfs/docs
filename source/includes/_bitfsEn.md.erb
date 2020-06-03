@@ -1,0 +1,60 @@
+# BitFS Payment
+
+## Scene Introduction
+
+BitFS payment refers to the merchant displaying goods or services on the mobile or PC webpage. When the user confirms the use of BitFS payment on the aforementioned page, the merchant initiates this service to call the [BitFS] App for payment or use the [BitFS] App to scan the code for payment.
+
+It is mainly used in the scenario where the touch screen version of the mobile browser requests BitFS payment and the scenario where the PC browser initiates an order and uses the App to scan the code to pay. Can easily evoke BitFS payment and scan code payment from the browser.
+
+Application entrance: Log in to BitFS official website-> enterprise users-> contact sales-> platform access application
+
+## Interface development process
+
+<%= image_tag "images/paymentEn/development.png" %>
+
+**Flow Description:**
+
+1. The user completes the order on the merchant side and uses BitFS payment to make the payment
+
+2. The merchant's background initiates an order request to BitFS payment. Note: trade type trade_type = “DEPOSIT”
+
+3. Merchant side saves order information
+
+4. The fiat currency / digital currency recharge ordering interface returns payment-related parameters to the merchant background,
+
+5. BitFS returns the URL of the gateway intermediate page
+
+6, 7, 8, such as payment jump url (parameter name "pay_url"), the merchant calls up the BitFS payment middle page through pay_url
+
+9.10. Check the payment authority and security check on the middle page
+
+11,12, users scan the code to obtain BitFS payment order information for payment
+
+13, 14. If the payment is successful, the merchant background will receive the asynchronous notification of the BitFS background and return the reception result
+
+15. The user completes the payment or cancels the payment in the BitFS payment app, and returns to the payment result page
+
+16. Merchants are on the display page to guide users to actively initiate payment result inquiries
+
+17,18. The merchant background judges whether it has received the payment result notification of the BitFS background. If not, the background calls the BitFS order query interface to confirm the order status
+
+20, 21. Show the final order payment result to the user
+
+##  Business Process
+
+**Merchant**
+
+Require merchants to have a mall website that has undergone ICP filing. BitFS payment can be used in browsers (such as Google Chrome, Baidu browser, UC browser, etc.) to use BitFS payment scenarios.
+
+**User**
+
+1、The mobile terminal directly confirms the transaction through the App and enters the payment password; the PC terminal needs to download the BitFS App, then scans the code to obtain the order information to confirm the transaction, and enters the payment password.
+
+<%= image_tag "images/paymentEn/toBuy.jpg" %>
+
+2、The mobile terminal directly confirms the transaction through the App and enters the payment password; the PC terminal needs to download the BitFS App, then scans the code to obtain the order information to confirm the transaction, and enters the payment password.
+
+<%= image_tag "images/paymentEn/payment.png" %>
+
+3、When the payment is successful, the user receives the payment voucher, and the merchant receives a notification of successful payment in the background.
+<%= image_tag "images/paymentEn/payOk.png" %>
