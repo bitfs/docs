@@ -1,4 +1,6 @@
 cn:
+  url: "http://bitfs.github.io/slate/en"
+  lang: "English"
   descTitle: "简介"
   aboutUsTitle: "关于我们"
   aboutUs01: "欢迎使用BitFS。"

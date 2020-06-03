@@ -55,9 +55,11 @@ under the License.
   <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
     <header>
       <div class="flex_box">
-	  <%= image_tag "logo.png", class: 'logo' %>
+      <a href="http://www.bitfs.com" style="display: block;">
+      <%= image_tag "logo.png", class: 'logo' %>
+      </a>
       </div>
-      <a href="http://bitfs.github.io/slate/en" class="lang"  id="lang_box" style="display: block;">English</a>
+      <a href="<%= t(:url) %>" class="lang"  id="lang_box" style="display: block;"><%= t(:lang) %></a>
     </header>
 
     <div class="toc-wrapper">

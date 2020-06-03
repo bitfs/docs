@@ -1,4 +1,6 @@
 en:
+  url: "http://bitfs.github.io/slate"
+  lang: "简体中文"
   descTitle: "Introduction"
   aboutUsTitle: "About Us"
   aboutUs01: "Welcome to BitFS."
