@@ -1,0 +1,467 @@
+# Transaction List
+
+## Fiat Currency Recharge
+
+### Application Scenarios
+
+BitFS payment means that the merchant displays goods or services on the PC or mobile webpage. When the user confirms the use of BitFS payment on the aforementioned page, the merchant initiates this service to call the [BitFS] APP for quick payment. Mainly used in scenarios where smartphone browsers request BitFS payment. You can easily evoke BitFS payment from an external browser. This interface is called when merchandise goods are priced in fiat currency.
+
+### General
+
+- API name: recharge interface-legal tender price
+
+* Request method: HTTP POST
+* Request URL: pay / v1 / unifiedorder
+
+### Request Parameters
+
+>request:
+
+~~~java
+{
+ 	"mch_id":"441649692783284224",
+ 	"device_type":"PC",
+ 	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    "local":"en_US",
+ 	"out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+ 	"spbill_create_ip":127.0.0.1,
+ 	"fee_type":"CNY",
+ 	"trade_type":"DEPOSIT",
+ 	"body":"Mini game-recharge coupon",
+ 	"total_amount":"100",
+ 	"notify_url":"https://www.baidu.com",
+ 	"timestamp":1585471277677,
+ 	"appKey":"fc798420836184e33c042de1caa2814a",
+ 	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+}
+~~~
+
+| Parameter        | Type       | Required | Example                          | Description                                                  |
+| :--------------- | ---------- | :------- | :------------------------------- | :----------------------------------------------------------- |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS.                            |
+| device_type      | String     | true     | PC                               | Device Type：Whether the device that initiated the request comes from the mobile terminal or the PC terminal. |
+| attach           | String     | false    | Guangzhou Head Office            | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
+| nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string, not longer than 32 bits.                      |
+| local            | String     | true     | en_US                            | Fill in the local network language according to international standards. |
+| out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The internal order number of the merchant system, within 32 characters, can only be numbers, uppercase and lowercase letters, and unique under the same merchant number. |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Terminal Ip：Must pass the correct client IP, support ipv4, ipv6 format. |
+| sign_type        | String     | false    | MD5                              | Signature Type, default is MD5                               |
+| fee_type         | String     | true     | CNY                              | Currency Type：Three-letter code in accordance with ISO 4217.See the list of fiat currencies for details. |
+| trade_type       | String     | true     | DEPOSIT                          | Transaction Type：Deposit: DEPOSIT；Withdrawal: WITHDRAW.    |
+| body             | String     | true     | “Mini game-recharge coupon”      | Commodity Simple Description, the Field Name must be passed in strict accordance with the specifications. |
+| total_amount     | BigDecimal | true     | 100                              | The total amount of the order.                               |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification". |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated.       |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS.                           |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign.See Sign generation algorithm for details.              |
+
+### Response Content
+
+>response:
+
+~~~java
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": "{
+        "pay_url":"http://174.139.156.39:8866/#/?id=439535840037699584",
+    	"mch_id":"441649692783284224",
+    	"trade_type":"DEPOSIT",
+    	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+	}"
+}
+~~~
+
+| Parameter | Required | Type        | Example | Description                                                  |
+| --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful.   |
+| msg       | true     | String(255) | success | Information is the cause of the error when the code is not 0, for example: Sign failed; parameter format check error. |
+
+<aside class="notice">The following Field Name is returned when the code is 0</aside>
+
+| Field Name        | Parameter  | Required | Type   | Example                                               | Description                                                  |
+| :---------------- | :--------- | :------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| Payment Jump Link | pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
+| Merchant Id       | mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS                     |
+| Transaction Type  | trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW                         |
+| Random string     | nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS                              |
+| Sign              | sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS                                       |
+
+### Error Code
+
+| Name                   | Description                           | Reason                                                  | Solution                                                     |
+| ---------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
+| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
+| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
+| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
+| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
+| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
+| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+
+
+
+## Fiat Currency Withdrawal
+
+### Application Scenario
+
+When BitFS users initiate withdrawals in the merchant system, the merchant system calls this interface to easily transfer money to the user using the merchant account. BitFS converts the amount of fiat currency into USDT at the real-time market exchange rate.
+
+### Generalize
+
+* Name：Withdrawal interface--fiat interface
+
+* Request Method：HTTP POST
+
+* Request URL：pay/v1/withdraw
+
+### Request Parameters
+
+> request:
+
+~~~java
+{
+    "mch_id":"441649692783284224",
+    "area_code":"0086",
+    "get_account":"13899996666",
+    "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "spbill_create_ip":127.0.0.1,
+    "fee_type":"CNY",
+    "trade_type":"WITHDRAW",
+    "total_amount":"100",
+    "notify_url":"https://www.baidu.com",
+    "timestamp":1585471277677,
+    "appKey":"fc798420836184e33c042de1caa2814a",
+    "sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+}
+~~~
+
+| Parameter        | Type       | Required | Example                          | Description                                                  |
+| ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
+| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs                         |
+| get_account      | String     | true     | 13899996666                      | The account that initiated the withdrawal.                   |
+| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
+| out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
+| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5                               |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
+| fee_type         | String     | true     | CNY                              | Three-letter code in accordance with ISO 4217,See the list of fiat currencies for details |
+| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT Withdrawal: WITHDRAW                        |
+| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order                                |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，see Sign generation algorithm for details，Default MD5 |
+
+### Response Content
+
+> response
+
+~~~java
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": "{
+        "mch_id":"441649692783284224",
+    	"trade_type":"DEPOSIT",
+    	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+	}"
+}
+~~~
+
+| Parameter | Required | Type        | Example | Description                                                  |
+| --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed or parameter format check error |
+
+<aside class="notice">The following Field Name is returned when the code is 0</aside>
+
+| Parameter  | Required | Type   | Example                          | Description                              |
+| ---------- | -------- | ------ | -------------------------------- | ---------------------------------------- |
+| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS |
+| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW     |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS          |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS                   |
+
+### Error Code
+
+| Name                       | Description                           | Reason                                                  | Solution                                                     |
+| -------------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
+| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
+| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
+| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
+| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
+| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
+| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user    |
+
+
+
+## Digital Currency Recharge
+
+### Application Scenario
+
+BitFS payment means that the merchant displays goods or services on the PC or mobile webpage. When the user confirms the use of BitFS payment on the aforementioned page, the merchant initiates this service to call the BitFS APP for rapid payment. Mainly used in scenarios where smartphone browsers request BitFS payment. You can easily evoke BitFS payment from an external browser. This interface is called when merchandise goods are priced in digital currency.
+
+### Generalize
+
+* Name：Recharge interface-digital currency pricing
+
+* Request Method：HTTP POST
+* Request URL：pay/v1/coinunifiedorder
+
+### Request Parameters
+
+>request:
+
+~~~java
+{
+    "mch_id":"441649692783284224",
+    "device_type":"PC",
+    "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    "local":"en_US",
+    "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "spbill_create_ip":127.0.0.1,
+    "fee_type":"BTC",
+    "trade_type":"DEPOSIT",
+    "body":"Mini game-recharge coupon",
+    "total_amount":"1000",
+    "notify_url":"https://www.baidu.com",
+    "timestamp":1585471277677,
+    "appKey":"fc798420836184e33c042de1caa2814a",
+    "sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+}
+~~~
+
+| Parameter        | Type       | Required | Example                          | Description                                                  |
+| ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
+| device_type      | String     | true     | PC                               | Whether the device that initiated the request comes from the mobile terminal or the PC terminal。 |
+| attach           | String     | false    | Guangzhou Head Office            | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
+| local            | String     | true     | en_US                            | Fill in the local network language according to international standards |
+| out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
+| sign_type        | String     | false    | MD5                              | Signature Type, default is MD5                               |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
+| fee_type         | String     | true     | BTC                              | Three-letter code in accordance with ISO 4217,详见数字货币列表 |
+| trade_type       | String     | true     | DEPOSIT                          | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
+| body             | String     | true     | “Mini game-recharge coupon”      | Commodity Simple Description, the Field Name must be passed in strict accordance with the specifications |
+| total_amount     | BigDecimal | true     | 1000                             | Total order amount                                           |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign.See Sign generation algorithm for details，Default MD5  |
+
+### Response Content
+
+~~~java
+{
+    "code": 0,
+    "msg": "SUCCESS",
+    "result": "{
+        "pay_url":"http://174.139.156.39:8866/#/?id=439535840037699584",
+    	"mch_id":"441649692783284224",
+    	"trade_type":"DEPOSIT",
+    	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+	}"
+
+}
+~~~
+
+| Parameter | Required | Type        | Example | Description                                                  |
+| --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed; parameter format check error |
+
+<aside class="notice">The following Field Name is returned when the code is 0</aside>
+
+| Parameter  | Required | Type   | Example                                               | Description                                                  |
+| ---------- | -------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
+| mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS                     |
+| trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW                         |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS                              |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS                                       |
+
+### Error Code
+
+| Name                   | Description                           | Reason                                                  | Solution                                                     |
+| ---------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
+| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
+| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
+| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
+| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
+| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
+| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+
+ 
+
+## Digital Currency Withdrawal
+
+### Application Scenario
+
+When a BitFS user initiates a withdrawal in the merchant system, the merchant system calls this interface to easily transfer money to the user using the merchant account. BitFS converts the amount of digital currency into USDT at the real-time market exchange rate.
+
+### Generalize
+
+* Name：Withdrawal interface--digital currency interface
+
+* Request Method：HTTP POST
+
+* Request URL：pay/v1/coinwithdraw
+
+### Request Parameters
+
+> request:
+
+~~~java
+{
+    "mch_id":"441649692783284224",
+    "area_code":"0086"
+    "get_account":"13899996666",
+    "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "spbill_create_ip":127.0.0.1,
+    "fee_type":"BTC",
+    "trade_type":"WITHDRAW",
+    "total_amount":"1000",
+    "notify_url":"https://www.baidu.com",
+    "timestamp":1585471277677,
+    "appKey":"fc798420836184e33c042de1caa2814a",
+    "sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+}
+~~~
+
+| Parameter        | Type       | Required | Example                          | Description                                                  |
+| ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
+| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs                         |
+| get_account      | String     | true     | 13899996666                      | The account that initiated the withdrawal.                   |
+| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
+| out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
+| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5                               |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
+| fee_type         | String     | true     | BTC                              | The coin code of the withdrawal.See the list of fiat currencies for details |
+| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
+| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order                                |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，See Sign generation algorithm for details;Default MD5  |
+
+### Response Content
+
+> response:
+
+~~~java
+{
+    "code": 0,
+    "msg": "success",
+    "result": "{
+        "mch_id":"441649692783284224",
+    	"trade_type":"DEPOSIT",
+    	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+	}"
+}
+~~~
+
+| Parameter | Required | Type        | Example | Description                                                  |
+| --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, such as a sign failure or a parameter format check error |
+
+<aside class="notice">The following Field Name is returned when the code is 0</aside>
+
+| Parameter  | Required | Type   | Example                          | Description                              |
+| ---------- | -------- | ------ | -------------------------------- | ---------------------------------------- |
+| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS |
+| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW     |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS          |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS                   |
+
+### Error Code
+
+| Name                       | Description                           | Reason                                                  | Solution                                                     |
+| -------------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
+| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
+| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
+| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
+| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
+| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
+| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
+| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user    |
+
+
+
+## Callback Notification
+
+### Application Scenario
+
+This interface is provided by the merchant. After the payment is completed, BitFS will send the relevant payment results to the merchant, the merchant needs to receive and process, and return the response according to the document specifications
+
+### Generalize
+
+- Name:Order information callback notification
+
+- Request Method：POST
+
+- Request Connection：The link is set through the notify_url parameter submitted in the [Recharge/ Withdraw API]. If the link cannot be accessed, the merchant will not receive BitFS notifications.
+
+- Parameter Format：application/json; charset=utf-8
+
+### Callback Parameter
+
+> request:
+
+~~~java
+{
+    "mch_id":"441649692783284224",
+    "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "total_amount":"99.99",
+    "transaction_id":"44240523622d4b2ca836176cd88085d3",
+    "trade_type":"DEPOSIT",
+    "fee_type":"CNY",
+    "attach":"Recharge of Guangzhou Branch,
+    "trade_state":"100",
+    "tick_price":"7.00",
+    "order_fee":"2.02",
+    "trade_state_desc":"Cancel Transaction",
+    "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
+    "sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
+}
+~~~
+
+| Parameter        | Required | Type   | Example                          | Description                                                  |
+| ---------------- | -------- | ------ | -------------------------------- | ------------------------------------------------------------ |
+| mch_id           | true     | String | 441649692783284224               | Merchants allocated by BitFS                                 |
+| customer_id      | false    | String | 442314630598103040               | Scan code transaction user ID. When the user scans the code to get the order, the Field Name is returned. |
+| out_trade_no     | true     | String | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
+| nonce_str        | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string                                                |
+| total_amount     | true     | String | 14.14                            | 当fee_type为法币时单位为元；当fee_type为数字货币时单位为 1个 |
+| transaction_id   | true     | String | 44240523622d4b2ca836176cd88085d3 | BitFS生成的订单号                                            |
+| trade_type       | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
+| tick_price       | true     | String | 7.00                             | The price of BitFS when initiating the request.              |
+| order_fee        | true     | String | 2.02                             | The number of digital currencies (USDT) actually traded.     |
+| fee_type         | true     | String | CNY                              | The transaction currency that initiated the request is divided into fiat currency and digital currency,See the currency list for details |
+| attach           | false    | String | "Recharge of Guangzhou Branch"   | Business extensions                                          |
+| trade_state      | true     | String | 100                              | 100: the transaction was successful; 200: the transaction failed;300 ：Cancel Transaction |
+| trade_state_desc | true     | String | Cancel Transaction               | A description of the transaction status.                     |
+| sign             | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign。                                                       |
+
+### Return parameter
+
+
+| Parameter   | Required | Type   | Example | Description                                                  |
+| ----------- | -------- | ------ | ------- | ------------------------------------------------------------ |
+| return_code | true     | String | SUCCESS | SUCCESS/FAIL:'SUCCESS' means the merchant received the notification successfully and verified successfully |
+| return_msg  | false    | String | OK      | Information，If not empty, it is an error; Reason:sign failure or parameter format check error |

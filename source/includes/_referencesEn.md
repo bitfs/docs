@@ -1,0 +1,92 @@
+# Reference Data
+
+## Transaction Currency Type
+
+**1.French Currency Type**
+
+| Name | Code |
+| ---- | ---- |
+| CNY  | CNY  |
+| USD  | USD  |
+
+
+
+**2.Digital Currency Type**
+
+| Name      | Code   |
+| --------- | ------ |
+| BTC       | BTC    |
+| TetherUSD | USDETH |
+| ETH       | ETH    |
+
+
+
+## Sign Algorithm
+
+### The general steps for sign generation are as follows：
+
+
+
+**First Step：**
+
+Set all sent or received data to set M, and sort the parameters of the non-empty parameter values in set M according to the parameter name ASCII code from small to large (lexicographic order),
+
+Use the format of URL key-value pairs (that is, key1 = value1 & key2 = value2 ...) to concatenate into a string param_string.
+
+The following are the Sign rules:
+
+- Sort ASCII codes of parameter names from small to large (lexicographic order);
+- If the parameter value is empty, do not participate in Sign;
+- Parameter names are case sensitive;
+- When the verification call returns or BitFS actively informs Sign, the transmitted sign parameter does not participate in the Sign, and the generated Sign is checked against the sign value.
+- The BitFS interface may increase Field Name, and must support the addition of extended Field Name when verifying the Sign
+
+
+
+**Second Step:**
+
+Join the key at the end of param_string to get the sign_string string, then perform MD5 operation on sign_string, and then convert all the characters of the obtained string to uppercase to get the sign value sign_value.
+
+Key setting path: BitFS merchant platform-> settings-> merchant private key settings
+
+
+
+### Examples
+
+Pass the following parameters：
+
+`"mch_id":"441649692783284224",`
+
+`"out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",`
+
+`"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",`
+
+`"appKey":"a58b139c85adbccf3a4b3a8e83a2bfba",`
+
+
+
+**First Step:**
+
+Sort parameters lexicographically：
+
+`param_string=”appKey=a58b139c85adbccf3a4b3a8e83a2bfba&mch_id=441649692783284224&nonce_str=FEC838C0BEA5468A82E2467DA4F70B8C&out_trade_no=7faf7e60a92d4afa963b83933a949ecc“`
+
+
+
+**Second Step:**
+
+Splice merchant private key and then perform MD5 operation：
+
+`sign_string="param_string&key=3e678f6e4546f6968c99b52ae4b6659b2cc44d3543ae2fd7538ca48faabfc68e"`
+
+`sign=MD5(sign_string).toUpperCase()="81A3948E5FFEF46F8A2FDE51D8EF3A6D"`
+
+
+
+Random number generation algorithm：
+
+The BitFS API interface protocol contains FieldNamenonce_str, which mainly guarantees that Sign is unpredictable. It is recommended to call the random number function to generate and convert the obtained value into a character string.
+
+
+
+# 

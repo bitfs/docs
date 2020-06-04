@@ -1,0 +1,86 @@
+# 参考资料
+
+## 交易货币类型
+
+### 1.法币类型
+
+| 币种名称 | 币种编码 |
+| -------- | -------- |
+| 人民币   | CNY      |
+| 美元     | USD      |
+
+
+
+
+
+### 2.数字货币类型
+
+| 货币名称  | 货币编码 |
+| --------- | -------- |
+| 比特币    | BTC      |
+| TetherUSD | USDT     |
+| 以太坊    | ETH      |
+
+## 签名算法
+
+### 签名生成的通用步骤如下：
+
+**第一步：**
+
+设所有发送或者接收到的数据为集合M，将集合M内非空参数值的参数按照参数名ASCII码从小到大排序（字典序),
+
+使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串param_string。
+
+以下为签名规则：
+
+- 参数名ASCII码从小到大排序（字典序）；
+- 如果参数的值为空不参与签名；
+- 参数名区分大小写；
+- 验证调用返回或BitFS 主动通知签名时，传送的sign参数不参与签名，将生成的签名与该sign值作校验。
+- BitFS 接口可能增加字段，验证签名时必须支持增加的扩展字段
+
+
+
+**第二步:**
+
+在param_string最后拼接上key得到sign_string字符串，然后对sign_string进行MD5运算，再将得到的字符串所有字符转换为大写，得到sign值sign_value。
+
+key设置路径：BitFS 商户平台-->设置-->商家私钥设置 
+
+
+
+### 举例
+
+传递如下参数：
+
+`"mch_id":"441649692783284224",`
+
+`"out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",`
+
+`"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",`
+
+`"appKey":"a58b139c85adbccf3a4b3a8e83a2bfba",`
+
+
+
+**第一步:**
+
+将参数按字典序排序
+
+`param_string=”appKey=a58b139c85adbccf3a4b3a8e83a2bfba&mch_id=441649692783284224&nonce_str=FEC838C0BEA5468A82E2467DA4F70B8C&out_trade_no=7faf7e60a92d4afa963b83933a949ecc“`
+
+
+
+**第二步:**
+
+拼接商户私钥然后进行MD5运算
+
+`sign_string="param_string&key=3e678f6e4546f6968c99b52ae4b6659b2cc44d3543ae2fd7538ca48faabfc68e"`
+
+`sign=MD5(sign_string).toUpperCase()="81A3948E5FFEF46F8A2FDE51D8EF3A6D"`
+
+
+
+生成随机数算法
+
+BitFS API接口协议中包含字段nonce_str，主要保证签名不可预测。推荐调用随机数函数生成，将得到的值转换为字符串。
