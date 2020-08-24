@@ -8,7 +8,7 @@ cn:
   aboutUs02: "BitFS致力打造全新支付方式，提供稳定、安全、可靠的数字货币支付通道。全球化支付，实时提现模式，提升商家的服务效率和营收，降低运营成本，使消费者的体验更便捷、更愉悦、更完美。"
   aboutUs04: "本文档是官方唯一指定API文档。您可以在右侧的阴影区域查看代码示例。"
   updateTitle: "更新"
-  update01: "关于API的更新情况，BitFS会发布在帮助中心的API公告处，您可点击<a href="https://bitfs.zendesk.com/hc/zh-cn">这里</a>进行查看。如获取最新资讯，请关注该话题！"
+  update01: "关于API的更新情况，BitFS会发布在帮助中心的API公告处。"
   contactUsTitle: "联系我们"
   contactUs01: "使用过程中如有问题或建议，请通过以下方式联系我们："
   contactUs02: "进入BitFS官网点击右下角【支持】按钮联系我们"
