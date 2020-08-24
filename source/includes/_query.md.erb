@@ -172,20 +172,22 @@ NULL
 {
     "mch_id":"441649692783284224",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "appKey":"a58b139c85adbccf3a4b3a8e83a2bfba",
     "sign":"FB87C3106C43DF67513ABDFE8029A096"
 }
 ~~~
 
-| 变量         | 必填  | 类型   | 示例值                           | 描述                                         |
-| ------------ | ----- | ------ | -------------------------------- | -------------------------------------------- |
-| mch_id       | true  | String | 441649692783284224               | BitFS分配的商户                              |
-| out_trade_no | true  | String | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号：32个字符内、可包含字母 |
-| nonce_str    | true  | String | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串                                   |
-| sign_type    | false | String | MD5                              | 签名类型：默认为MD5                          |
-| appKey       | true  | String | a58b139c85adbccf3a4b3a8e83a2bfba | 商户的appkey                                 |
-| sign         | true  | String | FB87C3106C43DF67513ABDFE8029A096 | 签名                                         |
+| 变量           | 必填   | 类型   | 示例值                           | 描述                                                         |
+| -------------- | ------ | ------ | -------------------------------- | ------------------------------------------------------------ |
+| mch_id         | true   | String | 441649692783284224               | BitFS分配的商户                                              |
+| out_trade_no   | true   | String | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号：32个字符内、可包含字母                 |
+| transaction_id | String | true   | 330183791717372699               | 网关订单ID;                                                               注意：请求参数中的商户系统内部订单号：“out_trade_no”和网关订单ID：“transaction_id”。二选一，如果两个都返回则默认使用参数为“商户系统内部订单号“：out_trade_no |
+| nonce_str      | true   | String | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串                                                   |
+| sign_type      | false  | String | MD5                              | 签名类型：默认为MD5                                          |
+| appKey         | true   | String | a58b139c85adbccf3a4b3a8e83a2bfba | 商户的appkey                                                 |
+| sign           | true   | String | FB87C3106C43DF67513ABDFE8029A096 | 签名                                                         |
 
 ### 返回结果
 

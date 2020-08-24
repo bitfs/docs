@@ -24,6 +24,7 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
  	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "local":"en_US",
  	"out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
  	"spbill_create_ip":127.0.0.1,
  	"fee_type":"CNY",
  	"trade_type":"DEPOSIT",
@@ -44,6 +45,7 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string, not longer than 32 bits.                      |
 | local            | String     | true     | en_US                            | Fill in the local network language according to international standards. |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The internal order number of the merchant system, within 32 characters, can only be numbers, uppercase and lowercase letters, and unique under the same merchant number. |
+| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
 | spbill_create_ip | String     | true     | 127.0.0.1                        | Terminal Ip：Must pass the correct client IP, support ipv4, ipv6 format. |
 | sign_type        | String     | false    | MD5                              | Signature Type, default is MD5                               |
 | fee_type         | String     | true     | CNY                              | Currency Type：Three-letter code in accordance with ISO 4217.See the list of fiat currencies for details. |
@@ -83,22 +85,22 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 | Field Name        | Parameter  | Required | Type   | Example                                               | Description                                                  |
 | :---------------- | :--------- | :------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
 | Payment Jump Link | pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
-| Merchant Id       | mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS                     |
-| Transaction Type  | trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW                         |
-| Random string     | nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS                              |
-| Sign              | sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS                                       |
+| Merchant Id       | mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
+| Transaction Type  | trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
+| Random string     | nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
+| Sign              | sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
 
 ### Error Code
 
 | Name                   | Description                           | Reason                                                  | Solution                                                     |
 | ---------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
-| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
-| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
-| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
-| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
-| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
-| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
-| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match.                  |
+| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm. |
+| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly. |
+| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete.                 |
+| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters. |
+| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency. |
+| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct. |
 
 
 
@@ -127,6 +129,7 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
     "get_account":"13899996666",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"CNY",
     "trade_type":"WITHDRAW",
@@ -140,21 +143,22 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
 
 | Parameter        | Type       | Required | Example                          | Description                                                  |
 | ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
-| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
-| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs                         |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS.                            |
+| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs.                        |
 | get_account      | String     | true     | 13899996666                      | The account that initiated the withdrawal.                   |
-| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5                               |
-| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
-| fee_type         | String     | true     | CNY                              | Three-letter code in accordance with ISO 4217,See the list of fiat currencies for details |
-| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT Withdrawal: WITHDRAW                        |
-| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order                                |
-| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
-| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
-| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
-| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，see Sign generation algorithm for details，Default MD5 |
+| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
+| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5.                              |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
+| fee_type         | String     | true     | CNY                              | Three-letter code in accordance with ISO 4217,See the list of fiat currencies for details. |
+| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT Withdrawal: WITHDRAW.                       |
+| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order.                               |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification". |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated.       |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS.                           |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，see Sign generation algorithm for details，Default MD5. |
 
 ### Response Content
 
@@ -175,30 +179,30 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
 
 | Parameter | Required | Type        | Example | Description                                                  |
 | --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
-| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
-| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed or parameter format check error |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful.   |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed or parameter format check error. |
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Parameter  | Required | Type   | Example                          | Description                              |
-| ---------- | -------- | ------ | -------------------------------- | ---------------------------------------- |
-| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS |
-| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW     |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS          |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS                   |
+| Parameter  | Required | Type   | Example                          | Description                               |
+| ---------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
+| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
+| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
 
 ### Error Code
 
 | Name                       | Description                           | Reason                                                  | Solution                                                     |
 | -------------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
-| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
-| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
-| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
-| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
-| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
-| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
-| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct |
-| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user    |
+| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match.                  |
+| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm. |
+| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly. |
+| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete.                 |
+| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters. |
+| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency. |
+| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct. |
+| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user.   |
 
 
 
@@ -226,6 +230,7 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "local":"en_US",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"BTC",
     "trade_type":"DEPOSIT",
@@ -241,21 +246,22 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 | Parameter        | Type       | Required | Example                          | Description                                                  |
 | ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
 | mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
-| device_type      | String     | true     | PC                               | Whether the device that initiated the request comes from the mobile terminal or the PC terminal。 |
-| attach           | String     | false    | Guangzhou Head Office            | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| device_type      | String     | true     | PC                               | Whether the device that initiated the request comes from the mobile terminal or the PC terminal. |
+| attach           | String     | false    | Guangzhou Head Office            | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
-| local            | String     | true     | en_US                            | Fill in the local network language according to international standards |
+| local            | String     | true     | en_US                            | Fill in the local network language according to international standards. |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| sign_type        | String     | false    | MD5                              | Signature Type, default is MD5                               |
-| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
-| fee_type         | String     | true     | BTC                              | Three-letter code in accordance with ISO 4217,详见数字货币列表 |
-| trade_type       | String     | true     | DEPOSIT                          | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
-| body             | String     | true     | “Mini game-recharge coupon”      | Commodity Simple Description, the Field Name must be passed in strict accordance with the specifications |
-| total_amount     | BigDecimal | true     | 1000                             | Total order amount                                           |
-| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
-| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
-| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
-| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign.See Sign generation algorithm for details，Default MD5  |
+| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
+| sign_type        | String     | false    | MD5                              | Signature Type, default is MD5.                              |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
+| fee_type         | String     | true     | BTC                              | Three-letter code in accordance with ISO 4217.               |
+| trade_type       | String     | true     | DEPOSIT                          | Deposit: DEPOSIT; Withdraw: WITHDRAW.                        |
+| body             | String     | true     | “Mini game-recharge coupon”      | Commodity Simple Description, the Field Name must be passed in strict accordance with the specifications. |
+| total_amount     | BigDecimal | true     | 1000                             | Total order amount.                                          |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification". |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated.       |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS.                           |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign.See Sign generation algorithm for details，Default MD5. |
 
 ### Response Content
 
@@ -276,30 +282,30 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 
 | Parameter | Required | Type        | Example | Description                                                  |
 | --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
-| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
-| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed; parameter format check error |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful.   |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, for example: Sign failed; parameter format check error. |
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
 | Parameter  | Required | Type   | Example                                               | Description                                                  |
 | ---------- | -------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
 | pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
-| mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS                     |
-| trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW                         |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS                              |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS                                       |
+| mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
+| trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
 
 ### Error Code
 
 | Name                   | Description                           | Reason                                                  | Solution                                                     |
 | ---------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
-| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
-| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
-| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
-| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
-| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
-| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
-| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct |
+| APPKEY_MCHID_NOT_MATCH | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match.                  |
+| SIGNERROR              | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm. |
+| OUT_TRADE_NO_USED      | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly. |
+| LACK_PARAMS            | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete.                 |
+| SYSTEMERROR            | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters. |
+| COIN_NOT_EXIST         | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency. |
+| ACCOUNT_NOT_EXIST      | Account does not exist                | Merchant account does not exist                         | Please check whether the merchant account information is correct. |
 
  
 
@@ -328,6 +334,7 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
     "get_account":"13899996666",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"BTC",
     "trade_type":"WITHDRAW",
@@ -341,21 +348,22 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
 
 | Parameter        | Type       | Required | Example                          | Description                                                  |
 | ---------------- | ---------- | -------- | -------------------------------- | ------------------------------------------------------------ |
-| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS                             |
-| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs                         |
+| mch_id           | String     | true     | 441649692783284224               | Merchant ID distributed by BitFS.                            |
+| area_code        | String     | true     | 0086                             | Where the withdrawal account belongs.                        |
 | get_account      | String     | true     | 13899996666                      | The account that initiated the withdrawal.                   |
-| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders。 |
+| attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5                               |
-| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format   |
-| fee_type         | String     | true     | BTC                              | The coin code of the withdrawal.See the list of fiat currencies for details |
-| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
-| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order                                |
-| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification" |
-| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated        |
-| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS                            |
-| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，See Sign generation algorithm for details;Default MD5  |
+| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
+| sign_type        | String     | true     | MD5                              | Signature Type, default is MD5.                              |
+| spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
+| fee_type         | String     | true     | BTC                              | The coin code of the withdrawal.See the list of fiat currencies for details. |
+| trade_type       | String     | true     | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.                        |
+| total_amount     | BigDecimal | true     | 1000                             | The total amount of the order.                               |
+| notify_url       | String     | true     | https://www.baidu.com            | Receive the callback address for asynchronous notification of BitFS payment. For details, please refer to "Callback Notification". |
+| timestamp        | String     | true     | 1585471277677                    | The time in milliseconds when the order was initiated.       |
+| appKey           | String     | true     | 1e75e94982f80bd1f219ea807af96bd5 | Merchant AppKey assigned by BitFS.                           |
+| sign             | String     | true     | 13F9609AA53A8AEBED5516EE8696A995 | Sign，See Sign generation algorithm for details;Default MD5. |
 
 ### Response Content
 
@@ -376,30 +384,30 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
 
 | Parameter | Required | Type        | Example | Description                                                  |
 | --------- | -------- | ----------- | ------- | ------------------------------------------------------------ |
-| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful    |
-| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, such as a sign failure or a parameter format check error |
+| code      | true     | Int         | 0       | Gateway return code, return 0 when the call is successful.   |
+| msg       | true     | String(255) | success | When the code is not 0, the Information is an error Reason, such as a sign failure or a parameter format check error. |
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Parameter  | Required | Type   | Example                          | Description                              |
-| ---------- | -------- | ------ | -------------------------------- | ---------------------------------------- |
-| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS |
-| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW     |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS          |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS                   |
+| Parameter  | Required | Type   | Example                          | Description                               |
+| ---------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
+| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
+| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
+| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
+| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
 
 ### Error Code
 
 | Name                       | Description                           | Reason                                                  | Solution                                                     |
 | -------------------------- | ------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------ |
-| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match                   |
-| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm |
-| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly |
-| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete                  |
-| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters |
-| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency |
-| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct |
-| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user    |
+| APPKEY_MCHID_NOT_MATCH     | machId does not match Merchant AppKey | machId does not match Merchant AppKey                   | Please confirm that appid and mch_id match.                  |
+| SIGNERROR                  | Sign error                            | Parameter Sign result is incorrect                      | Please check whether Sign parameters and methods meet the requirements of Sign algorithm. |
+| OUT_TRADE_NO_USED          | Merchant order number is duplicated   | The same transaction cannot be submitted multiple times | Please verify whether Merchant Order Number is submitted repeatedly. |
+| LACK_PARAMS                | Missing parameters                    | Missing required request parameters                     | Please check if the parameters are complete.                 |
+| SYSTEMERROR                | System error                          | System timeout                                          | The system is abnormal, please call again with the same parameters. |
+| COIN_NOT_EXIST             | Currency not supported                | The requested currency is not supported                 | Please refer to the currency list to upload the correct currency. |
+| TRANSFER_ACCOUNT_NOT_EXIST | Transfer account does not exist       | Merchant account does not exist                         | Please check whether the merchant account information is correct. |
+| YOLLON_NOT_EXIST           | Collection account does not exist     | Withdrawal user Bitfs account does not exist            | Please ensure that the withdrawal account is a bitfs user.   |
 
 
 
@@ -443,25 +451,25 @@ This interface is provided by the merchant. After the payment is completed, BitF
 
 | Parameter        | Required | Type   | Example                          | Description                                                  |
 | ---------------- | -------- | ------ | -------------------------------- | ------------------------------------------------------------ |
-| mch_id           | true     | String | 441649692783284224               | Merchants allocated by BitFS                                 |
+| mch_id           | true     | String | 441649692783284224               | Merchants allocated by BitFS.                                |
 | customer_id      | false    | String | 442314630598103040               | Scan code transaction user ID. When the user scans the code to get the order, the Field Name is returned. |
 | out_trade_no     | true     | String | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| nonce_str        | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string                                                |
-| total_amount     | true     | String | 14.14                            | 当fee_type为法币时单位为元；当fee_type为数字货币时单位为 1个 |
-| transaction_id   | true     | String | 44240523622d4b2ca836176cd88085d3 | BitFS生成的订单号                                            |
-| trade_type       | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW                         |
+| nonce_str        | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string.                                               |
+| total_amount     | true     | String | 14.14                            | When fee_type is legal currency, the unit is yuan; when fee_type is digital currency, the unit is 1. |
+| transaction_id   | true     | String | 44240523622d4b2ca836176cd88085d3 | Order number generated by BitFS.                             |
+| trade_type       | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.                        |
 | tick_price       | true     | String | 7.00                             | The price of BitFS when initiating the request.              |
 | order_fee        | true     | String | 2.02                             | The number of digital currencies (USDT) actually traded.     |
-| fee_type         | true     | String | CNY                              | The transaction currency that initiated the request is divided into fiat currency and digital currency,See the currency list for details |
-| attach           | false    | String | "Recharge of Guangzhou Branch"   | Business extensions                                          |
-| trade_state      | true     | String | 100                              | 100: the transaction was successful; 200: the transaction failed;300 ：Cancel Transaction |
+| fee_type         | true     | String | CNY                              | The transaction currency that initiated the request is divided into fiat currency and digital currency,See the currency list for details. |
+| attach           | false    | String | "Recharge of Guangzhou Branch"   | Business extensions.                                         |
+| trade_state      | true     | String | 100                              | 100: the transaction was successful; 200: the transaction failed;300 ：Cancel Transaction. |
 | trade_state_desc | true     | String | Cancel Transaction               | A description of the transaction status.                     |
-| sign             | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign。                                                       |
+| sign             | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign.                                                        |
 
 ### Return parameter
 
 
 | Parameter   | Required | Type   | Example | Description                                                  |
 | ----------- | -------- | ------ | ------- | ------------------------------------------------------------ |
-| return_code | true     | String | SUCCESS | SUCCESS/FAIL:'SUCCESS' means the merchant received the notification successfully and verified successfully |
-| return_msg  | false    | String | OK      | Information，If not empty, it is an error; Reason:sign failure or parameter format check error |
+| return_code | true     | String | SUCCESS | SUCCESS/FAIL:'SUCCESS' means the merchant received the notification successfully and verified successfully. |
+| return_msg  | false    | String | OK      | Information，If not empty, it is an error; Reason:sign failure or parameter format check error. |

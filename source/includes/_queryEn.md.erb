@@ -99,7 +99,7 @@ Merchants can call this interface to query their account balances conveniently a
 | mch_id    | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
 | nonce_str | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string.                            |
 | fee_type  | true     | String | BTC                              | Coin Code.                                |
-| appkey    | true     | String | fc798420836184e33c042de1caa2814a | Appkey assigned by BitFs.                 |
+| appkey    | true     | String | fc798420836184e33c042de1caa2814a | Appkey assigned by BitFS.                 |
 | sign      | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign.                                     |
 | sign_type | false    | String | MD5                              | Signature Type，Default MD5.              |
 
@@ -174,20 +174,22 @@ This interface provides query of all BitFS payment orders. Merchants can activel
 {
     "mch_id":"441649692783284224",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
+    "transaction_id":"330183791717372699",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "appKey":"a58b139c85adbccf3a4b3a8e83a2bfba",
     "sign":"FB87C3106C43DF67513ABDFE8029A096"
 }
 ~~~
 
-| Field Name            | Parameter    | Required | Type   | Example                          | Description                                                  |
-| --------------------- | ------------ | -------- | ------ | -------------------------------- | ------------------------------------------------------------ |
-| Merchant Id           | mch_id       | true     | String | 441649692783284224               | Merchants allocated by BitFs.                                |
-| Merchant Order Number | out_trade_no | true     | String | 7faf7e60a92d4afa963b83933a949ecc | Order number within the merchant system: within 32 characters, may contain letters. |
-| Random string         | nonce_str    | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string.                                               |
-| Signature Type        | sign_type    | false    | String | MD5                              | Signature type: MD5 by default.                              |
-| Appkey                | appKey       | true     | String | a58b139c85adbccf3a4b3a8e83a2bfba | Merchant's appkey.                                           |
-| Sign                  | sign         | true     | String | FB87C3106C43DF67513ABDFE8029A096 | Sign.                                                        |
+| Parameter      | Required | Type   | Example                          | Description                                                  |
+| -------------- | -------- | ------ | -------------------------------- | ------------------------------------------------------------ |
+| mch_id         | true     | String | 441649692783284224               | Merchants allocated by BitFs.                                |
+| out_trade_no   | true     | String | 7faf7e60a92d4afa963b83933a949ecc | Order number within the merchant system: within 32 characters, may contain letters. |
+| transaction_id | String   | true   | 330183791717372699               | Gateway order ID;                                Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
+| nonce_str      | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string.                                               |
+| sign_type      | false    | String | MD5                              | Signature type: MD5 by default.                              |
+| appKey         | true     | String | a58b139c85adbccf3a4b3a8e83a2bfba | Merchant's appkey.                                           |
+| sign           | true     | String | FB87C3106C43DF67513ABDFE8029A096 | Sign.                                                        |
 
 ### Response Content
 
