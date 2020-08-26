@@ -24,7 +24,6 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
  	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "local":"en_US",
  	"out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
-    "transaction_id":"330183791717372699",
  	"spbill_create_ip":127.0.0.1,
  	"fee_type":"CNY",
  	"trade_type":"DEPOSIT",
@@ -45,7 +44,6 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string, not longer than 32 bits.                      |
 | local            | String     | true     | en_US                            | Fill in the local network language according to international standards. |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The internal order number of the merchant system, within 32 characters, can only be numbers, uppercase and lowercase letters, and unique under the same merchant number. |
-| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
 | spbill_create_ip | String     | true     | 127.0.0.1                        | Terminal Ip：Must pass the correct client IP, support ipv4, ipv6 format. |
 | sign_type        | String     | false    | MD5                              | Signature Type, default is MD5                               |
 | fee_type         | String     | true     | CNY                              | Currency Type：Three-letter code in accordance with ISO 4217.See the list of fiat currencies for details. |
@@ -68,6 +66,7 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
     "result": "{
         "pay_url":"http://174.139.156.39:8866/#/?id=439535840037699584",
     	"mch_id":"441649692783284224",
+        "transaction_id":"330183791717372699",
     	"trade_type":"DEPOSIT",
     	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
@@ -82,13 +81,14 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Field Name        | Parameter  | Required | Type   | Example                                               | Description                                                  |
-| :---------------- | :--------- | :------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
-| Payment Jump Link | pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
-| Merchant Id       | mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
-| Transaction Type  | trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
-| Random string     | nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
-| Sign              | sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
+| Parameter      | Required | Type   | Example                                               | Description                                                  |
+| :------------- | :------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| pay_url        | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
+| mch_id         | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
+| transaction_id | String   | true   | 330183791717372699                                    | Gateway order ID.                                            |
+| trade_type     | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
+| nonce_str      | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
+| sign           | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
 
 ### Error Code
 
@@ -129,7 +129,6 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
     "get_account":"13899996666",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
-    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"CNY",
     "trade_type":"WITHDRAW",
@@ -149,7 +148,6 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
 | attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
 | sign_type        | String     | true     | MD5                              | Signature Type, default is MD5.                              |
 | spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
 | fee_type         | String     | true     | CNY                              | Three-letter code in accordance with ISO 4217,See the list of fiat currencies for details. |
@@ -170,6 +168,7 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
     "msg": "SUCCESS",
     "result": "{
         "mch_id":"441649692783284224",
+        "transaction_id":"330183791717372699",
     	"trade_type":"DEPOSIT",
     	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
@@ -184,12 +183,13 @@ When BitFS users initiate withdrawals in the merchant system, the merchant syste
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Parameter  | Required | Type   | Example                          | Description                               |
-| ---------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
-| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
-| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
+| Parameter      | Required | Type   | Example                          | Description                               |
+| -------------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
+| mch_id         | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
+| transaction_id | String   | true   | 330183791717372699               | Gateway order ID.                         |
+| trade_type     | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
+| nonce_str      | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
+| sign           | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
 
 ### Error Code
 
@@ -230,7 +230,6 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "local":"en_US",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
-    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"BTC",
     "trade_type":"DEPOSIT",
@@ -251,7 +250,6 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
 | local            | String     | true     | en_US                            | Fill in the local network language according to international standards. |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
 | sign_type        | String     | false    | MD5                              | Signature Type, default is MD5.                              |
 | spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
 | fee_type         | String     | true     | BTC                              | Three-letter code in accordance with ISO 4217.               |
@@ -272,6 +270,7 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
     "result": "{
         "pay_url":"http://174.139.156.39:8866/#/?id=439535840037699584",
     	"mch_id":"441649692783284224",
+        "transaction_id":"330183791717372699",
     	"trade_type":"DEPOSIT",
     	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
@@ -287,13 +286,14 @@ BitFS payment means that the merchant displays goods or services on the PC or mo
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Parameter  | Required | Type   | Example                                               | Description                                                  |
-| ---------- | -------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
-| pay_url    | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
-| mch_id     | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
-| trade_type | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
+| Parameter      | Required | Type   | Example                                               | Description                                                  |
+| -------------- | -------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| pay_url        | true     | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url is the middle page for pulling up BitFS payment. You can complete the payment by scanning the page and pulling up the BitFS App payment interface. |
+| mch_id         | true     | String | 441649692783284224                                    | The id assigned to the merchant by BitFS.                    |
+| transaction_id | String   | true   | 330183791717372699                                    | Gateway order ID.                                            |
+| trade_type     | true     | String | DEPOSIT                                               | Deposit: DEPOSIT: Withdraw: WITHDRAW.                        |
+| nonce_str      | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | Random string returned by BitFS.                             |
+| sign           | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | Sign returned by BitFS.                                      |
 
 ### Error Code
 
@@ -334,7 +334,6 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
     "get_account":"13899996666",
     "nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     "out_trade_no":"7faf7e60a92d4afa963b83933a949ecc",
-    "transaction_id":"330183791717372699",
     "spbill_create_ip":127.0.0.1,
     "fee_type":"BTC",
     "trade_type":"WITHDRAW",
@@ -354,7 +353,6 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
 | attach           | String     | false    | Common Withdrawal                | Additional Data, returned as it is in the query API and payment notification. This Field Name is mainly used by merchants to carry custom data for orders. |
 | nonce_str        | String     | true     | FEC838C0BEA5468A82E2467DA4F70B8C | Random string，not longer than 32 bits.                      |
 | out_trade_no     | String     | true     | 7faf7e60a92d4afa963b83933a949ecc | The order number within the merchant system, within 32 characters, may contain letters. |
-| transaction_id   | String     | true     | 330183791717372699               | Gateway order ID;                     Note: Merchant system internal order number in the request parameters: "out_trade_no" and gateway order ID: "transaction_id". Choose one of the two, if both are returned, the default parameter used is "Merchant System Internal Order Number": out_trade_no. |
 | sign_type        | String     | true     | MD5                              | Signature Type, default is MD5.                              |
 | spbill_create_ip | String     | true     | 127.0.0.1                        | Must pass the correct client IP, support ipv4, ipv6 format.  |
 | fee_type         | String     | true     | BTC                              | The coin code of the withdrawal.See the list of fiat currencies for details. |
@@ -375,6 +373,7 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
     "msg": "success",
     "result": "{
         "mch_id":"441649692783284224",
+        "transaction_id":"330183791717372699",
     	"trade_type":"DEPOSIT",
     	"nonce_str":"FEC838C0BEA5468A82E2467DA4F70B8C",
     	"sign":"F752ABD95162A4A95E7C4A5E33DAEDD9"
@@ -389,12 +388,13 @@ When a BitFS user initiates a withdrawal in the merchant system, the merchant sy
 
 <aside class="notice">The following Field Name is returned when the code is 0</aside>
 
-| Parameter  | Required | Type   | Example                          | Description                               |
-| ---------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
-| mch_id     | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
-| trade_type | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
-| nonce_str  | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
-| sign       | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
+| Parameter      | Required | Type   | Example                          | Description                               |
+| -------------- | -------- | ------ | -------------------------------- | ----------------------------------------- |
+| mch_id         | true     | String | 441649692783284224               | The id assigned to the merchant by BitFS. |
+| transaction_id | String   | true   | 330183791717372699               | Gateway order ID.                         |
+| trade_type     | true     | String | WITHDRAW                         | Deposit: DEPOSIT; Withdraw: WITHDRAW.     |
+| nonce_str      | true     | String | FEC838C0BEA5468A82E2467DA4F70B8C | Random string returned by BitFS.          |
+| sign           | true     | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | Sign returned by BitFS.                   |
 
 ### Error Code
 
