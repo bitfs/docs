@@ -408,7 +408,6 @@
     <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
     <span class="s">"local"</span><span class="o">:</span><span class="s">"en_US"</span><span class="o">,</span>
     <span class="s">"out_trade_no"</span><span class="o">:</span><span class="s">"7faf7e60a92d4afa963b83933a949ecc"</span><span class="o">,</span>
-    <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
     <span class="s">"spbill_create_ip"</span><span class="o">:</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">,</span>
     <span class="s">"fee_type"</span><span class="o">:</span><span class="s">"CNY"</span><span class="o">,</span>
     <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"DEPOSIT"</span><span class="o">,</span>
@@ -470,13 +469,6 @@
 <td style="text-align: left">true</td>
 <td style="text-align: left">7faf7e60a92d4afa963b83933a949ecc</td>
 <td style="text-align: left">商户系统内部订单号：要求32个字符内，只能是数字、大小写字母且在同一个商户号下唯一</td>
-</tr>
-<tr>
-<td style="text-align: left">transaction_id</td>
-<td>String</td>
-<td style="text-align: left">true</td>
-<td style="text-align: left">330183791717372699</td>
-<td style="text-align: left">网关订单ID;                                                               注意：请求参数中的商户系统内部订单号：“out_trade_no”和网关订单ID：“transaction_id”。二选一，如果两个都返回则默认使用参数为“商户系统内部订单号“：out_trade_no</td>
 </tr>
 <tr>
 <td style="text-align: left">spbill_create_ip</td>
@@ -559,6 +551,7 @@
     <span class="s">"result"</span><span class="o">:</span> <span class="s">"{
         "</span><span class="n">pay_url</span><span class="s">":"</span><span class="nl">http:</span><span class="c1">//174.139.156.39:8866/#/?id=439535840037699584",</span>
         <span class="s">"mch_id"</span><span class="o">:</span><span class="s">"441649692783284224"</span><span class="o">,</span>
+        <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
         <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"DEPOSIT"</span><span class="o">,</span>
         <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
         <span class="s">"sign"</span><span class="o">:</span><span class="s">"F752ABD95162A4A95E7C4A5E33DAEDD9"</span>
@@ -614,6 +607,13 @@
 <td>String</td>
 <td>441649692783284224</td>
 <td>BitFS分配给商户的id</td>
+</tr>
+<tr>
+<td style="text-align: left">transaction_id</td>
+<td style="text-align: left">true</td>
+<td>String</td>
+<td>330183791717372699</td>
+<td>网关订单ID</td>
 </tr>
 <tr>
 <td style="text-align: left">trade_type</td>
@@ -707,7 +707,6 @@
     <span class="s">"get_account"</span><span class="o">:</span><span class="s">"13899996666"</span><span class="o">,</span>
     <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
     <span class="s">"out_trade_no"</span><span class="o">:</span><span class="s">"7faf7e60a92d4afa963b83933a949ecc"</span><span class="o">,</span>
-    <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
     <span class="s">"spbill_create_ip"</span><span class="o">:</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">,</span>
     <span class="s">"fee_type"</span><span class="o">:</span><span class="s">"CNY"</span><span class="o">,</span>
     <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"WITHDRAW"</span><span class="o">,</span>
@@ -768,13 +767,6 @@
 <td>true</td>
 <td>7faf7e60a92d4afa963b83933a949ecc</td>
 <td>商户系统内部的订单号：32个字符内、可包含字母。</td>
-</tr>
-<tr>
-<td>transaction_id</td>
-<td>String</td>
-<td>true</td>
-<td>330183791717372699</td>
-<td>网关订单ID;                                                               注意：请求参数中的商户系统内部订单号：“out_trade_no”和网关订单ID：“transaction_id”。二选一，如果两个都返回则默认使用参数为“商户系统内部订单号“：out_trade_no</td>
 </tr>
 <tr>
 <td>sign_type</td>
@@ -849,6 +841,7 @@
     <span class="s">"msg"</span><span class="o">:</span> <span class="s">"請求成功"</span><span class="o">,</span>
     <span class="s">"result"</span><span class="o">:</span> <span class="s">"{
         "</span><span class="n">mch_id</span><span class="s">":"</span><span class="mi">441649692783284224</span><span class="s">",
+        "</span><span class="n">transaction_id</span><span class="s">":"</span><span class="mi">330183791717372699</span><span class="s">",
         "</span><span class="n">trade_type</span><span class="s">":"</span><span class="no">DEPOSIT</span><span class="s">",
         "</span><span class="n">nonce_str</span><span class="s">":"</span><span class="no">FEC838C0BEA5468A82E2467DA4F70B8C</span><span class="s">",
         "</span><span class="n">sign</span><span class="s">":"</span><span class="no">F752ABD95162A4A95E7C4A5E33DAEDD9</span><span class="s">"
@@ -884,7 +877,6 @@
 
 <table><thead>
 <tr>
-<th>字段</th>
 <th>变量</th>
 <th>必填</th>
 <th>类型</th>
@@ -893,15 +885,20 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>商户ID</td>
 <td>mch_id</td>
 <td>true</td>
 <td>String</td>
 <td>441649692783284224</td>
-<td>BitFS分配给商户的id</td>
+<td>BitFS分配给商户的ID</td>
 </tr>
 <tr>
-<td>交易类型</td>
+<td>transaction_id</td>
+<td>true</td>
+<td>String</td>
+<td>330183791717372699</td>
+<td>网关订单ID</td>
+</tr>
+<tr>
 <td>trade_type</td>
 <td>true</td>
 <td>String</td>
@@ -909,7 +906,6 @@
 <td>交易类型：充币:DEPOSIT ;提币:WITHDRAW</td>
 </tr>
 <tr>
-<td>随机字符</td>
 <td>nonce_str</td>
 <td>true</td>
 <td>String</td>
@@ -917,7 +913,6 @@
 <td>BitFS返回的随机字符串</td>
 </tr>
 <tr>
-<td>签名</td>
 <td>sign</td>
 <td>true</td>
 <td>String</td>
@@ -1001,7 +996,6 @@
     <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
     <span class="s">"local"</span><span class="o">:</span><span class="s">"en_US"</span><span class="o">,</span>
     <span class="s">"out_trade_no"</span><span class="o">:</span><span class="s">"7faf7e60a92d4afa963b83933a949ecc"</span><span class="o">,</span>
-    <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
     <span class="s">"spbill_create_ip"</span><span class="o">:</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">,</span>
     <span class="s">"fee_type"</span><span class="o">:</span><span class="s">"BTC"</span><span class="o">,</span>
     <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"DEPOSIT"</span><span class="o">,</span>
@@ -1019,7 +1013,6 @@
 <th>类型</th>
 <th>必填</th>
 <th>示例值</th>
-<th>描述</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -1027,119 +1020,102 @@
 <td>String</td>
 <td>true</td>
 <td>441649692783284224</td>
-<td>BitFS分配的商户ID</td>
 </tr>
 <tr>
 <td>device_type</td>
 <td>String</td>
 <td>true</td>
 <td>PC</td>
-<td>设备类型：发起请求的设备来自移动端还是PC端。</td>
 </tr>
 <tr>
 <td>attach</td>
 <td>String</td>
 <td>false</td>
 <td>广州总店</td>
-<td>附加数据：在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据。</td>
 </tr>
 <tr>
 <td>nonce_str</td>
 <td>String</td>
 <td>true</td>
 <td>FEC838C0BEA5468A82E2467DA4F70B8C</td>
-<td>随机字符串：不长于32位。</td>
 </tr>
 <tr>
 <td>local</td>
 <td>String</td>
 <td>true</td>
 <td>en_US</td>
-<td>本地语言：本地网络语言按国际标准填写</td>
 </tr>
 <tr>
 <td>out_trade_no</td>
 <td>String</td>
 <td>true</td>
 <td>7faf7e60a92d4afa963b83933a949ecc</td>
-<td>商户系统内部的订单号：32个字符内、可包含字母。</td>
 </tr>
 <tr>
 <td>transaction_id</td>
 <td>String</td>
 <td>true</td>
 <td>330183791717372699</td>
-<td>网关订单ID;                                                               注意：请求参数中的商户系统内部订单号：“out_trade_no”和网关订单ID：“transaction_id”。二选一，如果两个都返回则默认使用参数为“商户系统内部订单号“：out_trade_no</td>
 </tr>
 <tr>
 <td>sign_type</td>
 <td>String</td>
 <td>false</td>
 <td>MD5</td>
-<td>签名类型：默认为MD5</td>
 </tr>
 <tr>
 <td>spbill_create_ip</td>
 <td>String</td>
 <td>true</td>
 <td>127.0.0.1</td>
-<td>终端IP：必须传正确的用户端IP,支持ipv4、ipv6格式</td>
 </tr>
 <tr>
 <td>fee_type</td>
 <td>String</td>
 <td>true</td>
 <td>BTC</td>
-<td>货币类型：符合ISO 4217标准的三位字母代码，详见<a href="#d6a9971a56">币种列表</a></td>
 </tr>
 <tr>
 <td>trade_type</td>
 <td>String</td>
 <td>true</td>
 <td>DEPOSIT</td>
-<td>交易类型：充币:DEPOSIT ; 提币:WITHDRAW</td>
 </tr>
 <tr>
 <td>body</td>
 <td>String</td>
 <td>true</td>
 <td>“小游戏-点券充值”</td>
-<td>商品简单描述：该字段须严格按照规范传递</td>
 </tr>
 <tr>
 <td>total_amount</td>
 <td>BigDecimal</td>
 <td>true</td>
 <td>1000</td>
-<td>订单总金额</td>
 </tr>
 <tr>
 <td>notify_url</td>
 <td>String</td>
 <td>true</td>
 <td>https://www.baidu.com</td>
-<td>结果通知地址：接收BitFS支付异步通知回调地址，详情参考<a href="#b384fd01ff">回调通知</a></td>
 </tr>
 <tr>
 <td>timestamp</td>
 <td>String</td>
 <td>true</td>
 <td>1585471277677</td>
-<td>时间戳：发起订单时的时间毫秒数</td>
 </tr>
 <tr>
 <td>appKey</td>
 <td>String</td>
 <td>true</td>
 <td>1e75e94982f80bd1f219ea807af96bd5</td>
-<td>BitFS分配的商户appKey</td>
 </tr>
 <tr>
 <td>sign</td>
 <td>String</td>
 <td>true</td>
 <td>13F9609AA53A8AEBED5516EE8696A995</td>
-<td>签名，<a href="#7b81b8ce22">详见签名生成算法</a>，默认MD5</td>
 </tr>
 </tbody></table>
 <h3 id='3763e2bd8c-3'>返回结果</h3><div class="highlight"><pre class="highlight java tab-java"><code><span class="o">{</span>
@@ -1148,6 +1124,7 @@
     <span class="s">"result"</span><span class="o">:</span> <span class="s">"{
         "</span><span class="n">pay_url</span><span class="s">":"</span><span class="nl">http:</span><span class="c1">//174.139.156.39:8866/#/?id=439535840037699584",</span>
         <span class="s">"mch_id"</span><span class="o">:</span><span class="s">"441649692783284224"</span><span class="o">,</span>
+        <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
         <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"DEPOSIT"</span><span class="o">,</span>
         <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
         <span class="s">"sign"</span><span class="o">:</span><span class="s">"F752ABD95162A4A95E7C4A5E33DAEDD9"</span>
@@ -1204,6 +1181,13 @@
 <td>String</td>
 <td>441649692783284224</td>
 <td>BitFS分配给商户的id</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>true</td>
+<td>String</td>
+<td>330183791717372699</td>
+<td>网关订单ID</td>
 </tr>
 <tr>
 <td>trade_type</td>
@@ -1297,7 +1281,6 @@
     <span class="s">"get_account"</span><span class="o">:</span><span class="s">"13899996666"</span><span class="o">,</span>
     <span class="s">"nonce_str"</span><span class="o">:</span><span class="s">"FEC838C0BEA5468A82E2467DA4F70B8C"</span><span class="o">,</span>
     <span class="s">"out_trade_no"</span><span class="o">:</span><span class="s">"7faf7e60a92d4afa963b83933a949ecc"</span><span class="o">,</span>
-    <span class="s">"transaction_id"</span><span class="o">:</span><span class="s">"330183791717372699"</span><span class="o">,</span>
     <span class="s">"spbill_create_ip"</span><span class="o">:</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">,</span>
     <span class="s">"fee_type"</span><span class="o">:</span><span class="s">"BTC"</span><span class="o">,</span>
     <span class="s">"trade_type"</span><span class="o">:</span><span class="s">"WITHDRAW"</span><span class="o">,</span>
@@ -1358,13 +1341,6 @@
 <td>true</td>
 <td>7faf7e60a92d4afa963b83933a949ecc</td>
 <td>商户系统内部的订单号：32个字符内、可包含字母。</td>
-</tr>
-<tr>
-<td>transaction_id</td>
-<td>String</td>
-<td>true</td>
-<td>330183791717372699</td>
-<td>网关订单ID;                                                               注意：请求参数中的商户系统内部订单号：“out_trade_no”和网关订单ID：“transaction_id”。二选一，如果两个都返回则默认使用参数为“商户系统内部订单号“：out_trade_no</td>
 </tr>
 <tr>
 <td>sign_type</td>
@@ -1439,6 +1415,7 @@
     <span class="s">"msg"</span><span class="o">:</span> <span class="s">"請求成功"</span><span class="o">,</span>
     <span class="s">"result"</span><span class="o">:</span> <span class="s">"{
         "</span><span class="n">mch_id</span><span class="s">":"</span><span class="mi">441649692783284224</span><span class="s">",
+        "</span><span class="n">transaction_id</span><span class="s">":"</span><span class="mi">330183791717372699</span><span class="s">",
         "</span><span class="n">trade_type</span><span class="s">":"</span><span class="no">DEPOSIT</span><span class="s">",
         "</span><span class="n">nonce_str</span><span class="s">":"</span><span class="no">FEC838C0BEA5468A82E2467DA4F70B8C</span><span class="s">",
         "</span><span class="n">sign</span><span class="s">":"</span><span class="no">F752ABD95162A4A95E7C4A5E33DAEDD9</span><span class="s">"
@@ -1487,6 +1464,13 @@
 <td>String</td>
 <td>441649692783284224</td>
 <td>BitFS分配给商户的id</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>true</td>
+<td>String</td>
+<td>330183791717372699</td>
+<td>网关订单ID</td>
 </tr>
 <tr>
 <td>trade_type</td>
